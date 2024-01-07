@@ -1,8 +1,23 @@
 from typing import Union, Optional, Dict
 
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
+
+# Set up CORS middleware
+origins = [
+    "http://localhost:3000",  # React app is served from this URL
+    # Add other origins if necessary
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # Endpoint for the root URL
 @app.get("/", response_model=Dict[str, str])
